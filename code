@@ -1,6 +1,7 @@
+import sys
 
 numbers = [int(x) for x in input().split()]
-
+is_match = False
 while True:
     info = input()
     if info == "end":
@@ -8,11 +9,76 @@ while True:
     length = len(info.split())
     if len(info.split()) == 2:
         command, index = info.split()
-        if int(index) < len(numbers) or int(index) > len(numbers):
-            print("Invalid index")
-            continue
         if command == "exchange":
+            if 0 > int(index) or int(index) >= len(numbers):
+                print("Invalid index")
+                continue
             first_part = numbers[:int(index)+1]
             second_part = numbers[int(index)+1:]
             numbers = second_part+first_part
+        elif command == "max":
+            max_value = -sys.maxsize
+            current_index = 0
+            is_match = False
+            if index == "odd":
+                for i in range(len(numbers)):
+                    if numbers[i] % 2 != 0 and numbers[i] >= max_value:
+                        is_match = True
+                        if max_value == numbers[i]:
+                            current_index = i
+                        else:
+                            max_value, current_index = numbers[i], i
+            elif index == "even":
+                for i in range(len(numbers)):
+                    if numbers[i] % 2 == 0 and numbers[i] >= max_value:
+                        is_match = True
+                        if max_value == numbers[i]:
+                            current_index = i
+                        else:
+                            max_value, current_index = numbers[i], i
+            if not is_match:
+                print("No matches")
+            else:
+                print(current_index)
+                max_value = -sys.maxsize
+
+        elif command == "min":
+            min_value = sys.maxsize
+            current_index = 0
+            is_match = False
+            if index == "odd":
+                for i in range(len(numbers)):
+                    if numbers[i] % 2 != 0 and numbers[i] <= min_value:
+                        is_match = True
+                        if min_value == numbers[i]:
+                            current_index = i
+                        else:
+                            min_value, current_index = numbers[i], i
+            elif index == "even":
+                for i in range(len(numbers)):
+                    if numbers[i] % 2 == 0 and numbers[i] <= min_value:
+                        is_match = True
+                        if min_value == numbers[i]:
+                            current_index = i
+                        else:
+                            min_value, current_index = numbers[i], i
+            if not is_match:
+                print("No matches")
+            else:
+                print(current_index)
+                min_value = sys.maxsize
+
+    elif len(info.split()) == 3:
+        position, count, even_odd = info.split()
+        if 0 > int(count) or int(count) > len(numbers):
+            print("Invalid count")
+            continue
+        first_list = [x for x in numbers if (even_odd == "even" and x % 2 == 0) or (even_odd == "odd" and x % 2 != 0)]
+        if position == "first":
+            print(first_list[:int(count)])
+            first_list = []
+        elif position == "last":
+            print(first_list[-int(count):])
+            last_list = []
+print(numbers)
 
