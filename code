@@ -1,0 +1,18 @@
+
+numbers = [int(x) for x in input().split()]
+
+while True:
+    info = input()
+    if info == "end":
+        break
+    length = len(info.split())
+    if len(info.split()) == 2:
+        command, index = info.split()
+        if int(index) < len(numbers) or int(index) > len(numbers):
+            print("Invalid index")
+            continue
+        if command == "exchange":
+            first_part = numbers[:int(index)+1]
+            second_part = numbers[int(index)+1:]
+            numbers = second_part+first_part
+
