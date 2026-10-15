@@ -1,0 +1,30 @@
+#Tic-Tak-Toe code
+
+line1 = [int(x) for x in input().split()]
+line2 = [int(x) for x in input().split()]
+line3 = [int(x) for x in input().split()]
+
+matrix = [line1, line2, line3]
+
+lines = [
+    matrix[0],
+    matrix[1],
+    matrix[2],
+
+    [matrix[0][0], matrix[1][0], matrix[2][0]],
+    [matrix[0][1], matrix[1][1], matrix[2][1]],
+    [matrix[0][2], matrix[1][2], matrix[2][2]],
+
+    [matrix[0][0], matrix[1][1], matrix[2][2]],
+    [matrix[0][2], matrix[1][1], matrix[2][0]]]
+winner = 0
+for line in lines:
+    if line[0] == line[1] == line[2] and line[0] != 0:
+        winner = line[0]
+        break
+if winner == 2:
+    print("Second player won")
+elif winner == 1:
+    print("First player won")
+else:
+    print("Draw!")
